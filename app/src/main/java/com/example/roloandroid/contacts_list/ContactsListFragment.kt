@@ -1,0 +1,53 @@
+package com.example.roloandroid.contacts_list
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.roloandroid.R
+import com.example.roloandroid.databinding.ContactsListFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+@AndroidEntryPoint
+class ContactsListFragment : Fragment() {
+
+    companion object {
+        fun newInstance() =
+            ContactsListFragment()
+    }
+
+    val viewModel: ContactsListViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val bind = ContactsListFragmentBinding.inflate(
+            inflater,
+            container,
+            false
+        ).apply {
+            vm = viewModel
+            setLifecycleOwner {  this@ContactsListFragment.lifecycle}
+        }
+        return bind.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        GlobalScope.launch {
+            delay(2000)
+            findNavController().navigate(R.id.action_userListFragment_to_userProfileFragment)
+
+        }
+
+        // TODO: Use the ViewModel
+    }
+
+}
