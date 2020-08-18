@@ -27,6 +27,7 @@ class ContactsDetailFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val bind =  ContactsDetailFragmentBinding.inflate(
             inflater,
             container,
