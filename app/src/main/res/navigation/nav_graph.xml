@@ -12,7 +12,8 @@
         tools:layout="@layout/contacts_list_fragment" >
         <action
             android:id="@+id/action_contactsListFragment_to_contactsDetailFragment"
-            app:destination="@id/contactsDetailFragment" />
+            app:destination="@id/contactsDetailFragment"
+            app:enterAnim="@anim/move_in" />
     </fragment>
     <dialog
         android:id="@+id/contactsDetailFragment"
