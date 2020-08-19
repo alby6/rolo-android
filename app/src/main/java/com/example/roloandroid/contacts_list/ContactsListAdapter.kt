@@ -1,11 +1,13 @@
 package com.example.roloandroid.contacts_list
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.roloandroid.data.User
+import com.example.roloandroid.databinding.CellLayoutBinding
 
 
 class ContactsListAdapter(navInterface : NavigationInterface) : ListAdapter<User, GenericViewHolder>(object : DiffUtil.ItemCallback<User>(){
@@ -19,18 +21,28 @@ class ContactsListAdapter(navInterface : NavigationInterface) : ListAdapter<User
 }) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder {
 
-        TODO("Not yet implemented")
+        val bind = CellLayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+        false
+        )
+        return GenericViewHolder(bind)
     }
 
     override fun onBindViewHolder(holder: GenericViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.bind(getItem(position))
     }
 }
 
 
-class GenericViewHolder(vdb : ViewDataBinding) : RecyclerView.ViewHolder(vdb.root) {
-
-
-
+class GenericViewHolder(val vdb : ViewDataBinding) : RecyclerView.ViewHolder(vdb.root) {
+    fun bind(user : User) {
+        user.apply {
+            (vdb as? CellLayoutBinding)?.let {bind ->
+                bind.user = user
+                bind.executePendingBindings()
+            }
+        }
+    }
 }
 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="user"
+            type="com.example.roloandroid.data.User" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+
+        <ImageView
+            android:id="@+id/profilePicture"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginLeft="10dp"
+            app:decodeBindBmp="@{user.profilePicture}"
+            app:layout_constraintHeight_percent="0.8"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="start"
+            android:text="@{user.fullName}"
+            app:layout_constraintTop_toTopOf="@id/profilePicture"
+            app:layout_constraintBottom_toTopOf="@id/email"
+            app:layout_constraintLeft_toRightOf="@+id/profilePicture"
+            app:layout_constraintRight_toLeftOf="@+id/star" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="start"
+            android:text="@{user.email}"
+            app:layout_constraintTop_toBottomOf="@+id/name"
+            app:layout_constraintBottom_toBottomOf="@id/profilePicture"
+            app:layout_constraintLeft_toRightOf="@+id/profilePicture"
+            app:layout_constraintRight_toLeftOf="@+id/star" />
+
+        <Button
+            android:id="@+id/star"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginRight="10dp"
+            app:evaluateFavorite="@{user.isFavorite}"
+            app:layout_constraintHeight_percent="0.8"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -3,11 +3,22 @@ package com.example.roloandroid.xml_bind
 import android.graphics.Bitmap
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.example.roloandroid.util.Util
 
 
-@BindingAdapter("bindBmp")
-fun bindBmp(iv : ImageView, bmp : Bitmap?) {
-    bmp?.let {unwrappeBmp ->
-        iv.setImageBitmap(unwrappeBmp)
+@BindingAdapter("decodeBindBmp")
+fun decodeBindBmp(iv : ImageView, base64BitmapStr : String?) {
+    base64BitmapStr?.let {bmp ->
+        iv.setImageBitmap(Util.decode64Bmp(bmp))
     }
+}
+
+@BindingAdapter("evaluateFavorite")
+fun evaluateFavorite(iv : ImageView, isStarred : Boolean) {
+    if (isStarred) {
+        //iv.
+    } else {
+        //iv.setImageBitmap()
+    }
+
 }
