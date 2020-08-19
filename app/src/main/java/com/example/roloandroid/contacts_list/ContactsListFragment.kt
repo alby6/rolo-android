@@ -46,13 +46,6 @@ class ContactsListFragment : Fragment() {
     }
 
 
-    private fun createTabs(bind : ContactsListFragmentBinding) {
-/*
-        TabLayoutMediator(bind.tabLayout, viewPager){tab, position ->
-            tab.text = "OBJECT POSITION $position"
-        }.attach()
-*/
-    }
 
 
     private inner class ScreenSlidePagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {

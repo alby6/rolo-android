@@ -15,7 +15,7 @@ class ObserveRemoteDataUseCase @Inject constructor(
     @IoDispatcher ioDispatcher: CoroutineDispatcher
 ) : FlowUseCase<Unit, Long>(ioDispatcher) {
     override fun execute(parameters: Unit): Flow<Result<Long>> =
-        userRepository.getRemoteDataObservable().map {
+        userRepository.dataLastUpdatedObservable.map {
             Result.Success(it)
         }
 }

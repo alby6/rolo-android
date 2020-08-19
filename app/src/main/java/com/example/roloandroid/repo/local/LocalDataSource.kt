@@ -1,4 +1,4 @@
-package com.example.roloandroid.repo
+package com.example.roloandroid.repo.local
 
 import javax.inject.Inject
 import javax.inject.Singleton
