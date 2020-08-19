@@ -7,10 +7,11 @@ import com.example.roloandroid.repo.UserRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 
-class ObserveRemoteDataUseCase(
-    val userRepository: UserRepository,
+class ObserveRemoteDataUseCase @Inject constructor(
+    private val userRepository: UserRepository,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
 ) : FlowUseCase<Unit, Long>(ioDispatcher) {
     override fun execute(parameters: Unit): Flow<Result<Long>> =

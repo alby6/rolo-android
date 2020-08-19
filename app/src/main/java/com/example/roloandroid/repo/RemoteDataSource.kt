@@ -14,41 +14,18 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-@Singleton
 class RemoteDataSource @Inject constructor(
-    val okHttpClient: OkHttpClient
+    val remoteDataDownloader: RemoteDataDownloader
 ) {
+    fun executeRequest() : RemoteData? {
+        val response = try {
+            remoteDataDownloader.executeRequest()
+        } catch (e : Exception) {
+            throw e
+        }
 
-    companion object  {
-        const val URL = "URL"
-    }
-
-    var cached : List<User>?  = null
-
-    @ExperimentalCoroutinesApi
-    private val dataLastUpdatedChannel = BroadcastChannel<Long>(Channel.CONFLATED)
-
-    @ExperimentalCoroutinesApi
-    val dataLastUpdatedObservable = dataLastUpdatedChannel.asFlow()
-
-
-
-    fun getUserCache() : List<User>? {
-        return cached
-    }
-
-    fun executeRequest() {
-        //blocking call
-        val request = Request
-            .Builder()
-            .url(URL)
-            .build()
-
-        val result = okHttpClient.newCall(request).execute()
-
-
-        dataLastUpdatedChannel.offer(SystemClock.currentThreadTimeMillis())
-
+        //check if response body is valid
+        return UserDataParser.parseData(response.body!!)
     }
 
 }
