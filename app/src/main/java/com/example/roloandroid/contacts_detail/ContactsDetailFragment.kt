@@ -29,6 +29,7 @@ class ContactsDetailFragment : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //sets rounded corners for BottomSheetDialogFragment
         setStyle(STYLE_NORMAL, R.style. AppBottomSheetDialogTheme);
 
     }
@@ -46,6 +47,7 @@ class ContactsDetailFragment : BottomSheetDialogFragment() {
             setLifecycleOwner {  this@ContactsDetailFragment.lifecycle}
         }
 
+        //sets top offset for the bottom sheet (10% off from top of screen)
         (dialog as? BottomSheetDialog)?.let {
             it.behavior.peekHeight = (requireContext()
                 .resources

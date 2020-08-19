@@ -17,7 +17,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ContactsListFragment : Fragment() {
+class ContactsListFragment : Fragment(), NavigationInterface {
 
     companion object {
         fun newInstance() =
@@ -43,13 +43,10 @@ class ContactsListFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        GlobalScope.launch {
-            delay(2000)
+    }
 
-            findNavController().navigate(R.id.action_contactsListFragment_to_contactsDetailFragment)
-        }
-
-        // TODO: Use the ViewModel
+    override fun navigate() {
+        findNavController().navigate(R.id.action_contactsListFragment_to_contactsDetailFragment)
     }
 
 }
