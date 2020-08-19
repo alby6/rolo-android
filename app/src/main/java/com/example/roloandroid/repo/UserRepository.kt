@@ -1,9 +1,10 @@
 package com.example.roloandroid.repo
 
+import com.example.roloandroid.data.AppDatabase
 import com.example.roloandroid.data.User
 import com.example.roloandroid.googler_wrappers.Result
-import com.example.roloandroid.repo.local.LocalDataSource
 import com.example.roloandroid.repo.remote.RemoteDataSource
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -13,13 +14,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
+@ExperimentalCoroutinesApi
 @Singleton
 class UserRepository @Inject constructor(
-    val remoteDataSource: RemoteDataSource,
-    val localDataSource: LocalDataSource
+    private val remoteDataSource: RemoteDataSource,
+    private val appDatabase : AppDatabase
 ) {
 
-    //in memory cache of user. Opt to use this instead of database if available for better performance
+    //In-memory cache of user. If this is available, opt to use this instead of drawing from database for better performance.
     var cached : List<User>?  = null
 
     private val dataLastUpdatedChannel = BroadcastChannel<Long>(Channel.CONFLATED)
@@ -32,26 +34,29 @@ class UserRepository @Inject constructor(
             //save to cache
             cached = remoteData.users
             //save to disk
-
         }
 
         //let view model know that new information is available
         dataLastUpdatedChannel.offer(System.currentTimeMillis())
 
-
-
-
     }
+
+    fun getSaveToDisk(users : List<User>) {
+        //appDatabase.userDao().insertAll(users.toTypedArray())
+    }
+
 
     fun getUserCache() : Flow<Result<List<User>>> {
         return flow {
-            if (cached == null)
+            if (cached == null) {
+                emit(Result.Loading)
                 emit(
-                    Result.Error(
-                        Exception("Empty Cache")
-                    )
-            ) else {
-                emit(Result.Success(cached!!))
+                    Result.Success(appDatabase.userDao().getAll())
+                )
+            } else {
+                cached?.let {
+                    emit(Result.Success(it))
+                }
             }
         }
     }

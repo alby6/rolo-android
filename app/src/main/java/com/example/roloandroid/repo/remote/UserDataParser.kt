@@ -1,12 +1,12 @@
 package com.example.roloandroid.repo.remote
 
+import com.example.roloandroid.data.Company
 import com.example.roloandroid.data.User
 import okhttp3.ResponseBody
 import org.json.JSONObject
 
 
-class UserDataParser() {
-
+class UserDataParser {
 
     companion object  {
 
@@ -18,13 +18,18 @@ class UserDataParser() {
             val users = mutableListOf<User>()
             for (i in 0 until contacts.length()) {
                 val contact = contacts.getJSONObject(i)
+                val company = contact.getJSONObject("company")
                 users.add(
                     User(
                         contact.getInt("id"),
                         contact.getString("name"),
                         contact.getString("email"),
                         false,
-                        contact.getString("pictureUrl")
+                        contact.getString("pictureUrl"),
+                        Company(
+                            company.getString("name"),
+                            company.getString("catchPhrase")
+                        )
                     )
                 )
 
