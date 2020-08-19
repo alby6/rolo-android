@@ -14,11 +14,10 @@ import javax.inject.Inject
 
 
 class LoadUserDataUseCase @Inject constructor(
-    @IoDispatcher private val dispatcher: CoroutineDispatcher,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : FlowUseCase<Unit, List<User>>(dispatcher) {
-    override fun execute(parameters: Unit): Flow<Result<List<User>>> {
-        return userRepository.getUserCache()
-    }
+    override fun execute(parameters: Unit): Flow<Result<List<User>>> =
+        userRepository.getUserCache()
 
 }

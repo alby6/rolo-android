@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 
 class RemoteDataDownloader @Inject constructor(
-    val okHttpClient: OkHttpClient
+    private val okHttpClient: OkHttpClient
 ) {
 
     companion object  {

@@ -4,7 +4,7 @@ import javax.inject.Inject
 
 
 class RemoteDataSource @Inject constructor(
-    val remoteDataDownloader: RemoteDataDownloader
+    private val remoteDataDownloader: RemoteDataDownloader
 ) {
     fun executeRequest() : RemoteData? {
         val response = try {
