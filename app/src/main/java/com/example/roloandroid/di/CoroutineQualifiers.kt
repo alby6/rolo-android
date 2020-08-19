@@ -1,6 +1,5 @@
 package com.example.roloandroid.di
 
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Qualifier
 
 
