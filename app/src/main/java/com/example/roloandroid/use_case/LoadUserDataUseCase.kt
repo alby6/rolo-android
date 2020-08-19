@@ -7,12 +7,14 @@ import com.example.roloandroid.googler_wrappers.Result
 import com.example.roloandroid.googler_wrappers.UseCase
 import com.example.roloandroid.repo.UserRepository
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 import javax.inject.Inject
 
 
+@ExperimentalCoroutinesApi
 class LoadUserDataUseCase @Inject constructor(
     private val userRepository: UserRepository,
     @IoDispatcher private val dispatcher: CoroutineDispatcher

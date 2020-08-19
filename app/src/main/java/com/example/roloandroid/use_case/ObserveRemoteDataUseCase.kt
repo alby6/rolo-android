@@ -5,11 +5,13 @@ import com.example.roloandroid.googler_wrappers.FlowUseCase
 import com.example.roloandroid.googler_wrappers.Result
 import com.example.roloandroid.repo.UserRepository
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 
+@ExperimentalCoroutinesApi
 class ObserveRemoteDataUseCase @Inject constructor(
     private val userRepository: UserRepository,
     @IoDispatcher ioDispatcher: CoroutineDispatcher

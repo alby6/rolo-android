@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.example.roloandroid.FadePageTransformer
 import com.example.roloandroid.contacts_list.list_types.ContactsListAllFragment
 import com.example.roloandroid.contacts_list.list_types.ContactsListStarredFragment
 import com.example.roloandroid.databinding.ContactsListFragmentBinding
+import com.example.roloandroid.googler_wrappers.EventObserver
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,13 +42,26 @@ class ContactsListFragment : Fragment() {
             vm = viewModel
             setLifecycleOwner { this@ContactsListFragment.lifecycle }
         }
-
-        viewPager = bind.viewPager
-        viewPager.adapter = ScreenSlidePagerAdapter(this@ContactsListFragment)
+        setViewPagerInFrag(bind.viewPager)
+        setObservables()
         return bind.root
     }
 
+    private fun setViewPagerInFrag(viewPager : ViewPager2) {
+        viewPager.adapter = ScreenSlidePagerAdapter(this@ContactsListFragment)
+        viewPager.isUserInputEnabled = false
+        viewPager.setPageTransformer(FadePageTransformer()) //removes view pager animation
+        this.viewPager = viewPager
+    }
 
+    private fun setObservables() {
+        viewModel.allClickObservable.observe(viewLifecycleOwner, EventObserver {
+            viewPager.currentItem = 0
+        })
+        viewModel.starredClickObservable.observe(viewLifecycleOwner, EventObserver {
+            viewPager.currentItem = 1
+        })
+    }
 
 
     private inner class ScreenSlidePagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
