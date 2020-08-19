@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.roloandroid.R
+import com.example.roloandroid.databinding.ContactsListAllFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,12 +23,17 @@ class ContactsListAllFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.contacts_list_all_fragment, container, false)
+        val bind = ContactsListAllFragmentBinding.inflate(
+            inflater,
+            container,
+            false
+        ).apply {
+            vm = viewModel
+            setLifecycleOwner {  this@ContactsListAllFragment.lifecycle}
+        }
+        return bind.root
+
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
-    }
 
 }

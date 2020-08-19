@@ -9,6 +9,6 @@ import androidx.room.Query
 interface UserDao {
 
     @Query("SELECT * FROM user")
-    fun getAll() : LiveData<List<User>>
+    fun getAll() : List<User>
 
 }

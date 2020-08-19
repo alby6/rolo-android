@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.roloandroid.contacts_list.list_types.ContactsListAllFragment
 import com.example.roloandroid.contacts_list.list_types.ContactsListStarredFragment
 import com.example.roloandroid.databinding.ContactsListFragmentBinding
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -42,6 +43,15 @@ class ContactsListFragment : Fragment() {
         viewPager = bind.viewPager
         viewPager.adapter = ScreenSlidePagerAdapter(this@ContactsListFragment)
         return bind.root
+    }
+
+
+    private fun createTabs(bind : ContactsListFragmentBinding) {
+/*
+        TabLayoutMediator(bind.tabLayout, viewPager){tab, position ->
+            tab.text = "OBJECT POSITION $position"
+        }.attach()
+*/
     }
 
 

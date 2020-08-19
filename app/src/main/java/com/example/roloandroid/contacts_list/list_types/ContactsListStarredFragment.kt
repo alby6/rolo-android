@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.example.roloandroid.R
+import com.example.roloandroid.databinding.ContactsListStarredFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,12 +23,16 @@ class ContactsListStarredFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.contacts_list_starred_fragment, container, false)
+        val binding = ContactsListStarredFragmentBinding.inflate(
+            inflater,
+            container,
+            false
+        ).apply {
+            vm = viewModel
+            setLifecycleOwner {  this@ContactsListStarredFragment.lifecycle}
+        }
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        // TODO: Use the ViewModel
-    }
 
 }
