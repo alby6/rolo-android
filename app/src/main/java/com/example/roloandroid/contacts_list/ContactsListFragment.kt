@@ -6,25 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.example.roloandroid.R
-import com.example.roloandroid.contacts_detail.ContactsDetailFragment
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.example.roloandroid.contacts_list.list_types.ContactsListAllFragment
+import com.example.roloandroid.contacts_list.list_types.ContactsListStarredFragment
 import com.example.roloandroid.databinding.ContactsListFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ContactsListFragment : Fragment(), NavigationInterface {
+class ContactsListFragment : Fragment() {
 
     companion object {
         fun newInstance() =
             ContactsListFragment()
+
+        const val NUM_PAGES = 2
     }
 
     val viewModel: ContactsListViewModel by viewModels()
+    lateinit var viewPager: ViewPager2
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,17 +36,31 @@ class ContactsListFragment : Fragment(), NavigationInterface {
             false
         ).apply {
             vm = viewModel
-            setLifecycleOwner {  this@ContactsListFragment.lifecycle}
+            setLifecycleOwner { this@ContactsListFragment.lifecycle }
         }
+
+        viewPager = bind.viewPager
+        viewPager.adapter = ScreenSlidePagerAdapter(this@ContactsListFragment)
         return bind.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
 
-    override fun navigate() {
-        findNavController().navigate(R.id.action_contactsListFragment_to_contactsDetailFragment)
-    }
+    private inner class ScreenSlidePagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
 
+        override fun getItemCount(): Int = NUM_PAGES
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> {
+                    ContactsListAllFragment()
+                }
+                else -> {
+                    ContactsListStarredFragment()
+                }
+            }
+
+        }
+    }
 }
+
+
+

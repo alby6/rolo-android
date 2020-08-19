@@ -14,6 +14,4 @@ data class User(
     @ColumnInfo(name = "email") val email : String,
     @ColumnInfo(name = "is_favorite") val isFavorite : Boolean,
     @ColumnInfo(name = "profile_picture") val profilePicture : String?
-
-    val fullName: String = "$firstName $lastName"
 )
