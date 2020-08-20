@@ -57,11 +57,12 @@
             app:layout_constraintLeft_toRightOf="@+id/profilePicture"
             app:layout_constraintRight_toLeftOf="@+id/star" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/star"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginRight="10dp"
+            app:srcCompat="@drawable/ic_star"
             app:evaluateFavorite="@{user.isFavorite}"
             app:layout_constraintHeight_percent="0.8"
             app:layout_constraintDimensionRatio="1:1"

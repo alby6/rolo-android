@@ -13,6 +13,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.roloandroid.FadePageTransformer
 import com.example.roloandroid.R
+import com.example.roloandroid.data.User
 import com.example.roloandroid.databinding.ContactsListFragmentBinding
 import com.example.roloandroid.googler_wrappers.EventObserver
 import com.example.roloandroid.googler_wrappers.data
@@ -54,7 +55,11 @@ class ContactsListFragment : Fragment(), NavigationInterface {
     }
 
     private fun setAdapter(bind : ContactsListFragmentBinding) {
-        adapter = ContactsListAdapter(this@ContactsListFragment)
+        adapter = ContactsListAdapter(
+            this@ContactsListFragment,
+            viewModel
+        )
+
         val llm = LinearLayoutManager(requireContext())
         bind.recyclerView.adapter = adapter
         bind.recyclerView.layoutManager = llm
@@ -71,12 +76,20 @@ class ContactsListFragment : Fragment(), NavigationInterface {
     }
 
     private fun setAdapterObservable() {
-        viewModel.contactsListRefreshRequiredObservable.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it.data!!)
-            it.data?.forEach {user ->
-                println(user)
-                println(user.profilePicture)
-            }
+        viewModel.contactsListRefreshRequiredObservable.observe(viewLifecycleOwner, Observer { result ->
+            println("I am called")
+           // adapter.submitList(result.data!!)
+
+            adapter.submitList(
+               // result.data!!.toList()
+                result.data!!.map {
+                    val user = it.copy()
+                    user.profilePicture = it.profilePicture //pass the bitmap so it does not get nulled out
+                    user
+                }
+            )
+
+
         })
     }
     override fun navigate(bundle: Bundle) {

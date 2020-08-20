@@ -6,6 +6,7 @@ import com.example.roloandroid.data.User
 import com.example.roloandroid.googler_wrappers.Event
 import com.example.roloandroid.googler_wrappers.Result
 import com.example.roloandroid.use_case.ExecuteRemoteDataRequestUseCase
+import com.example.roloandroid.use_case.InvertStarStatusUseCase
 import com.example.roloandroid.use_case.LoadUserDataUseCase
 import com.example.roloandroid.use_case.ObserveRemoteDataUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,10 +14,13 @@ import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 class ContactsListViewModel @ViewModelInject constructor(
+
     private val observeRemoteDataUseCase : ObserveRemoteDataUseCase,
     private val executeRemoteDataRequestUseCase: ExecuteRemoteDataRequestUseCase,
-    private val loadUserDataUseCase: LoadUserDataUseCase
-): ViewModel() {
+    private val loadUserDataUseCase: LoadUserDataUseCase,
+    private val invertStarStatusUseCase : InvertStarStatusUseCase
+
+): ViewModel(), StarInverterInterface {
 
     private val starredClick : MutableLiveData<Event<Unit>> = MutableLiveData()
     val starredClickObservable : LiveData<Event<Unit>> = starredClick
@@ -27,6 +31,12 @@ class ContactsListViewModel @ViewModelInject constructor(
     private val dataUpdatedLiveData = observeRemoteDataUseCase(Unit).asLiveData()
     val contactsListRefreshRequiredObservable : LiveData<Result<List<User>>> = dataUpdatedLiveData.switchMap {
         loadUserDataUseCase(Unit).asLiveData()
+    }
+
+    override fun invertStarStatus(uid : Int) {
+        viewModelScope.launch {
+            invertStarStatusUseCase(uid)
+        }
     }
 
 
@@ -42,5 +52,6 @@ class ContactsListViewModel @ViewModelInject constructor(
     fun allClick() {
         allClick.value = Event(Unit)
     }
+
 
 }

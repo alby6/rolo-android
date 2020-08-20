@@ -40,9 +40,22 @@ class UserRepository @Inject constructor(
         }
 
         //let view model know that new information is available
-        dataLastUpdatedChannel.offer(System.currentTimeMillis())
+        notifyUpdatedChannel()
+    }
+
+    fun invertStarStatus(uid : Int) {
+        cached?.let {users ->
+            if (uid < users.size) {
+                users[uid].isFavorite = !users[uid].isFavorite
+                println("Favorite Status ${users[uid].isFavorite}")
+            }
+        }
 
     }
+    private fun notifyUpdatedChannel() {
+        dataLastUpdatedChannel.offer(System.currentTimeMillis())
+    }
+
 
     fun saveToDisk(users : List<User>?) {
         users?.let {
