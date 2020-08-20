@@ -5,14 +5,16 @@ import android.graphics.Color
 import android.widget.Button
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.example.roloandroid.util.RoundedBitmapConverter
 import com.example.roloandroid.util.Util
-
+import kotlinx.coroutines.withContext
 
 
 @BindingAdapter("bindBmp")
 fun bindBmp(iv : ImageView, bmp : Bitmap?) {
     bmp?.let { unwrappedBmp ->
-        iv.setImageBitmap(unwrappedBmp)
+        val rb = RoundedBitmapConverter.roundBmp(unwrappedBmp, iv.context)
+        iv.setImageDrawable(rb)
     }
 }
 

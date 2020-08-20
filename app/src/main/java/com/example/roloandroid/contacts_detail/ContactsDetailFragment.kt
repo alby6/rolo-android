@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import com.example.roloandroid.R
 import com.example.roloandroid.databinding.ContactsDetailFragmentBinding
 import com.example.roloandroid.googler_wrappers.data
+import com.example.roloandroid.util.RoundedBitmapConverter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,6 +71,7 @@ class ContactsDetailFragment : BottomSheetDialogFragment() {
             }
 
         })
+
 
         return bind.root
 

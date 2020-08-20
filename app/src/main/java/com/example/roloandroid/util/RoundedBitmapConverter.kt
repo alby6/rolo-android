@@ -11,7 +11,7 @@ class RoundedBitmapConverter {
     companion object {
         fun roundBmp(bmp : Bitmap, ctx : Context) : RoundedBitmapDrawable {
             val dr = RoundedBitmapDrawableFactory.create(ctx.resources, bmp)
-            dr.setCornerRadius(bmp.getWidth().coerceAtLeast(bmp.height) / 2.0f)
+            dr.cornerRadius = bmp.getWidth().coerceAtLeast(bmp.height) / 8.0f
             return dr
         }
 
