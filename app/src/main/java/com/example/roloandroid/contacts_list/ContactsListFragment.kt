@@ -7,28 +7,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.example.roloandroid.FadePageTransformer
-import com.example.roloandroid.contacts_list.list_types.ContactsListAllFragment
-import com.example.roloandroid.contacts_list.list_types.ContactsListStarredFragment
+import com.example.roloandroid.R
 import com.example.roloandroid.databinding.ContactsListFragmentBinding
 import com.example.roloandroid.googler_wrappers.EventObserver
+import com.example.roloandroid.googler_wrappers.data
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class ContactsListFragment : Fragment() {
+class ContactsListFragment : Fragment(), NavigationInterface {
 
     companion object {
         fun newInstance() =
             ContactsListFragment()
-
-        const val NUM_PAGES = 2
     }
 
     val viewModel: ContactsListViewModel by viewModels()
-    lateinit var viewPager: ViewPager2
+    lateinit var adapter : ContactsListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,44 +44,46 @@ class ContactsListFragment : Fragment() {
             vm = viewModel
             setLifecycleOwner { this@ContactsListFragment.lifecycle }
         }
-        setViewPagerInFrag(bind.viewPager)
-        setObservables()
+
+        setAdapter(bind)
+        setClickObservables()
+        setAdapterObservable()
+
+        viewModel.executeRemoteDataRequest()
         return bind.root
     }
 
-    private fun setViewPagerInFrag(viewPager : ViewPager2) {
-        viewPager.adapter = ScreenSlidePagerAdapter(this@ContactsListFragment)
-        viewPager.isUserInputEnabled = false
-        //viewPager.setPageTransformer(FadePageTransformer()) //removes view pager animation
-        //viewPager.offscreenPageLimit = 4
-        this.viewPager = viewPager
+    private fun setAdapter(bind : ContactsListFragmentBinding) {
+        adapter = ContactsListAdapter(this@ContactsListFragment)
+        val llm = LinearLayoutManager(requireContext())
+        bind.recyclerView.adapter = adapter
+        bind.recyclerView.layoutManager = llm
     }
 
-    private fun setObservables() {
+
+    private fun setClickObservables() {
+
         viewModel.allClickObservable.observe(viewLifecycleOwner, EventObserver {
-            viewPager.currentItem = 0
+
         })
         viewModel.starredClickObservable.observe(viewLifecycleOwner, EventObserver {
-            viewPager.currentItem = 1
         })
     }
 
-
-    private inner class ScreenSlidePagerAdapter(fa: Fragment) : FragmentStateAdapter(fa) {
-
-        override fun getItemCount(): Int = NUM_PAGES
-        override fun createFragment(position: Int): Fragment {
-            return when (position) {
-                0 -> {
-                    ContactsListAllFragment()
-                }
-                else -> {
-                    ContactsListStarredFragment()
-                }
+    private fun setAdapterObservable() {
+        viewModel.contactsListRefreshRequiredObservable.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it.data!!)
+            it.data?.forEach {user ->
+                println(user)
+                println(user.profilePicture)
             }
-
-        }
+        })
     }
+    override fun navigate(bundle: Bundle) {
+        findNavController().navigate(R.id.action_contactsListFragment_to_contactsDetailFragment, bundle)
+    }
+
+
 }
 
 

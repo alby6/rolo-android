@@ -1,13 +1,22 @@
 package com.example.roloandroid.contacts_list
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.roloandroid.data.User
 import com.example.roloandroid.googler_wrappers.Event
+import com.example.roloandroid.googler_wrappers.Result
+import com.example.roloandroid.use_case.ExecuteRemoteDataRequestUseCase
+import com.example.roloandroid.use_case.LoadUserDataUseCase
+import com.example.roloandroid.use_case.ObserveRemoteDataUseCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 
-class ContactsListViewModel @ViewModelInject constructor(): ViewModel() {
-    // TODO: Implement the ViewModel
+@ExperimentalCoroutinesApi
+class ContactsListViewModel @ViewModelInject constructor(
+    private val observeRemoteDataUseCase : ObserveRemoteDataUseCase,
+    private val executeRemoteDataRequestUseCase: ExecuteRemoteDataRequestUseCase,
+    private val loadUserDataUseCase: LoadUserDataUseCase
+): ViewModel() {
 
     private val starredClick : MutableLiveData<Event<Unit>> = MutableLiveData()
     val starredClickObservable : LiveData<Event<Unit>> = starredClick
@@ -15,7 +24,17 @@ class ContactsListViewModel @ViewModelInject constructor(): ViewModel() {
     private val allClick : MutableLiveData<Event<Unit>> = MutableLiveData()
     val allClickObservable : LiveData<Event<Unit>> = allClick
 
+    private val dataUpdatedLiveData = observeRemoteDataUseCase(Unit).asLiveData()
+    val contactsListRefreshRequiredObservable : LiveData<Result<List<User>>> = dataUpdatedLiveData.switchMap {
+        loadUserDataUseCase(Unit).asLiveData()
+    }
 
+
+    fun executeRemoteDataRequest() {
+        viewModelScope.launch {
+            executeRemoteDataRequestUseCase(Unit)
+        }
+    }
     fun starredClick() {
         starredClick.value = Event(Unit)
     }
