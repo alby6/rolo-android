@@ -12,11 +12,11 @@ import com.example.roloandroid.databinding.CellLayoutBinding
 
 class ContactsListAdapter(navInterface : NavigationInterface) : ListAdapter<User, GenericViewHolder>(object : DiffUtil.ItemCallback<User>(){
     override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
-        TODO("Not yet implemented")
+        return (oldItem == newItem)
     }
 
     override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
-        TODO("Not yet implemented")
+        return (oldItem.uid == newItem.uid)
     }
 }) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder {

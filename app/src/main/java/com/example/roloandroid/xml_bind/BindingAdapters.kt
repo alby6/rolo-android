@@ -10,12 +10,9 @@ import com.example.roloandroid.util.Util
 
 @BindingAdapter("decodeBindBmp")
 fun decodeBindBmp(iv : ImageView, bmp : Bitmap?) {
-    /*
-    base64BitmapStr?.let {bmp ->
-        iv.setImageBitmap(Util.decode64Bmp(bmp))
+    bmp?.let { unwrappedBmp ->
+        iv.setImageBitmap(unwrappedBmp)
     }
-
-     */
 }
 
 @BindingAdapter("evaluateFavorite")

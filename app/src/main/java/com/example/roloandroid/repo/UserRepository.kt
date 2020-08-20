@@ -34,6 +34,7 @@ class UserRepository @Inject constructor(
             //save to cache
             cached = remoteData.users
             //save to disk
+            saveToDisk(cached)
         }
 
         //let view model know that new information is available
@@ -41,8 +42,10 @@ class UserRepository @Inject constructor(
 
     }
 
-    fun getSaveToDisk(users : List<User>) {
-        //appDatabase.userDao().insertAll(users.toTypedArray())
+    fun saveToDisk(users : List<User>?) {
+        users?.let {
+            //appDatabase.userDao().insertAll(users.toTypedArray())
+        }
     }
 
 

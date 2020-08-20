@@ -19,6 +19,7 @@ class RemoteDataSource @Inject constructor(
         }
 
         //TODO check if response body is valid
+
         val remoteData =  RemoteData(UserDataParser.parseData(response.body!!))
 
         //create parallel network request to optimize download speed

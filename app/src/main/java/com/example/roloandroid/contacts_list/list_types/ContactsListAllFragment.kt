@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roloandroid.R
+import com.example.roloandroid.contacts_list.ContactsListAdapter
+import com.example.roloandroid.contacts_list.NavigationInterface
 import com.example.roloandroid.databinding.ContactsListAllFragmentBinding
 import com.example.roloandroid.googler_wrappers.data
 import com.example.roloandroid.repo.UserRepository
@@ -21,13 +24,14 @@ import kotlinx.coroutines.flow.asFlow
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ContactsListAllFragment : Fragment() {
+class ContactsListAllFragment : Fragment(), NavigationInterface{
 
     companion object {
         fun newInstance() = ContactsListAllFragment()
     }
 
     val viewModel: ContactsListAllViewModel by viewModels()
+    lateinit var adapter : ContactsListAdapter
 
 
     override fun onCreateView(
@@ -43,6 +47,12 @@ class ContactsListAllFragment : Fragment() {
             setLifecycleOwner {  this@ContactsListAllFragment.lifecycle}
         }
         setObservables()
+        adapter = ContactsListAdapter(this@ContactsListAllFragment)
+        bind.recyclerView.adapter = adapter
+        val llm = LinearLayoutManager(requireContext())
+        bind.recyclerView.layoutManager = llm
+
+        viewModel.executeRemoteDataRequest()
         return bind.root
 
     }
@@ -50,21 +60,18 @@ class ContactsListAllFragment : Fragment() {
 
 
     fun setObservables() {
-
-
-
         viewModel.contactsListRefreshRequiredObservable.observe(viewLifecycleOwner, Observer {
-            println("WTF33")
-        })
-        viewModel.wtf.observe(viewLifecycleOwner, Observer {
-            it.data?.forEach {
-                println(it)
-                println(it.profilePicture)
+            adapter.submitList(it.data!!)
+            it.data?.forEach {user ->
+                println(user)
+                println(user.profilePicture)
             }
         })
-        viewModel.executeRemoteDataRequest()
     }
 
+    override fun navigate() {
+        TODO("Not yet implemented")
+    }
 
 
 }

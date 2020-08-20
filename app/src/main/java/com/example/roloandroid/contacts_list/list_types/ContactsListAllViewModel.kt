@@ -7,10 +7,12 @@ import com.example.roloandroid.googler_wrappers.Result
 import com.example.roloandroid.use_case.ExecuteRemoteDataRequestUseCase
 import com.example.roloandroid.use_case.LoadUserDataUseCase
 import com.example.roloandroid.use_case.ObserveRemoteDataUseCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.switchMap
 import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
 class ContactsListAllViewModel @ViewModelInject constructor(
      private val observeRemoteDataUseCase : ObserveRemoteDataUseCase,
      private val executeRemoteDataRequestUseCase: ExecuteRemoteDataRequestUseCase,
@@ -20,13 +22,7 @@ class ContactsListAllViewModel @ViewModelInject constructor(
 
     private val dataUpdatedLiveData = observeRemoteDataUseCase(Unit).asLiveData()
 
-    val contactsListRefreshRequiredObservable : LiveData<Unit> = dataUpdatedLiveData.switchMap {
-        liveData {
-            emit(Unit)
-        }
-    }
-    val wtf : LiveData<Result<List<User>>> = dataUpdatedLiveData.switchMap {
-        println("WTFFFF")
+    val contactsListRefreshRequiredObservable : LiveData<Result<List<User>>> = dataUpdatedLiveData.switchMap {
         loadUserDataUseCase(Unit).asLiveData()
     }
 
