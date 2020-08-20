@@ -11,6 +11,7 @@ class BitmapParser {
     companion object {
         fun parseData(response : ResponseBody) : Bitmap {
             return BitmapFactory.decodeStream(response.byteStream())
+
         }
     }
 

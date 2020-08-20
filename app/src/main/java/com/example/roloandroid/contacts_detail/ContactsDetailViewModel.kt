@@ -1,8 +1,21 @@
 package com.example.roloandroid.contacts_detail
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.roloandroid.data.User
+import com.example.roloandroid.googler_wrappers.Result
+import com.example.roloandroid.googler_wrappers.data
+import com.example.roloandroid.use_case.LoadUserDataUseCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 
-class ContactsDetailViewModel @ViewModelInject constructor(): ViewModel() {
+@ExperimentalCoroutinesApi
+class ContactsDetailViewModel @ViewModelInject constructor(
+    private val loadUserDataUseCase: LoadUserDataUseCase
+): ViewModel() {
     // TODO: Implement the ViewModel
+
+    private val loadUserDataLiveData = loadUserDataUseCase(Unit).asLiveData()
+    val loadUserDataObservable : LiveData<Result<List<User>>> = loadUserDataLiveData
+
 }

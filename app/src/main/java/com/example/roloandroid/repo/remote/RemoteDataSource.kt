@@ -19,25 +19,21 @@ class RemoteDataSource @Inject constructor(
         }
 
         //TODO check if response body is valid
-
         val remoteData =  RemoteData(UserDataParser.parseData(response.body!!))
 
         //create parallel network request to optimize download speed
         coroutineScope {
             val list: MutableList<Deferred<Unit>> = ArrayList()
             for (currentUser in remoteData.users) {
-                try {
-                    val job = async {
-                        val resp = remoteDataDownloader.executeRequest(currentUser.imageUrl)
-
-                        //TODO check if response body is valid
-                         currentUser.profilePicture = BitmapParser.parseData(resp.body!!)
-                    }
-                    list.add(job)
-                } catch (e: Exception) {
-                    throw e
+                val job = async {
+                    val resp = remoteDataDownloader.executeRequest(currentUser.imageUrl)
+                    //TODO check if response body is valid
+                     currentUser.profilePicture = BitmapParser.parseData(resp.body!!)
                 }
+                list.add(job)
             }
+
+            //continue when all jobs are finished
             list.forEach {job ->
                 job.await()
             }

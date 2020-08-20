@@ -5,6 +5,7 @@ import com.example.roloandroid.data.User
 import com.example.roloandroid.googler_wrappers.Result
 import com.example.roloandroid.repo.remote.RemoteDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +26,7 @@ class UserRepository @Inject constructor(
     var cached : List<User>?  = null
 
     private val dataLastUpdatedChannel = BroadcastChannel<Long>(Channel.CONFLATED)
+    @FlowPreview
     val dataLastUpdatedObservable : Flow<Long> = dataLastUpdatedChannel.asFlow()
 
 

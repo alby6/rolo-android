@@ -7,6 +7,9 @@
             name="vm"
             type="com.example.roloandroid.contacts_detail.ContactsDetailViewModel" />
 
+        <variable
+            name="user"
+            type="com.example.roloandroid.data.User" />
     </data>
 
     <FrameLayout
@@ -20,14 +23,51 @@
             android:layout_height="10000dp"
             android:background="@drawable/rounded_top_corners_shape"
             >
-            <TextView
+            <ImageView
+                android:id="@+id/profilePicture"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:layout_marginTop="50dp"
+                app:bindBmp="@{user.profilePicture}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:background="@color/black"
+                />
+            <TextView
+                android:id="@+id/personName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:gravity="center_horizontal"
                 android:layout_marginTop="30dp"
+                android:text="@{user.name}"
+                app:layout_constraintTop_toBottomOf="@+id/profilePicture"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+            <TextView
+                android:id="@+id/companyName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="@{user.company.companyName}"
+                app:layout_constraintTop_toBottomOf="@+id/personName"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+            <TextView
+                android:id="@+id/companyLogo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="@{user.company.catchPhrase}"
+                app:layout_constraintTop_toBottomOf="@+id/companyName"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

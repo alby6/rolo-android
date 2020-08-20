@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.roloandroid.R
 import com.example.roloandroid.contacts_list.ContactsListAdapter
@@ -25,6 +26,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ContactsListAllFragment : Fragment(), NavigationInterface{
+
 
     companion object {
         fun newInstance() = ContactsListAllFragment()
@@ -69,8 +71,8 @@ class ContactsListAllFragment : Fragment(), NavigationInterface{
         })
     }
 
-    override fun navigate() {
-        TODO("Not yet implemented")
+    override fun navigate(bundle: Bundle) {
+        findNavController().navigate(R.id.action_contactsListFragment_to_contactsDetailFragment, bundle)
     }
 
 
