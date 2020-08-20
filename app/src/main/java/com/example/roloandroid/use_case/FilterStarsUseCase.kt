@@ -4,9 +4,10 @@ import com.example.roloandroid.data.User
 import com.example.roloandroid.di.IoDispatcher
 import com.example.roloandroid.googler_wrappers.UseCase
 import kotlinx.coroutines.CoroutineDispatcher
+import javax.inject.Inject
 
 
-class FilterStarsUseCase(
+class FilterStarsUseCase @Inject constructor(
     @IoDispatcher ioDispatcher: CoroutineDispatcher
 ) : UseCase<List<User>, List<User>>(ioDispatcher) {
     override suspend fun execute(parameters: List<User>): List<User> {

@@ -20,7 +20,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginLeft="10dp"
-            app:bindBmp="@{user.profilePicture}"
+            app:bindRoundBmp="@{user.profilePicture}"
             app:layout_constraintHeight_percent="0.8"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintLeft_toLeftOf="parent"

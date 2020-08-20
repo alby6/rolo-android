@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.asFlow
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ContactsListAllFragment : Fragment(), NavigationInterface{
+class ContactsListAllFragment : Fragment(), NavigationInterface {
 
 
     companion object {

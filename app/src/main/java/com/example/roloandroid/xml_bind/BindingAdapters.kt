@@ -10,8 +10,8 @@ import com.example.roloandroid.util.Util
 import kotlinx.coroutines.withContext
 
 
-@BindingAdapter("bindBmp")
-fun bindBmp(iv : ImageView, bmp : Bitmap?) {
+@BindingAdapter("bindRoundBmp")
+fun bindRoundBmp(iv : ImageView, bmp : Bitmap?) {
     bmp?.let { unwrappedBmp ->
         val rb = RoundedBitmapConverter.roundBmp(unwrappedBmp, iv.context)
         iv.setImageDrawable(rb)

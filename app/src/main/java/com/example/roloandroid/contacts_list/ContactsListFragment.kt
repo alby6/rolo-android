@@ -50,7 +50,8 @@ class ContactsListFragment : Fragment() {
     private fun setViewPagerInFrag(viewPager : ViewPager2) {
         viewPager.adapter = ScreenSlidePagerAdapter(this@ContactsListFragment)
         viewPager.isUserInputEnabled = false
-        viewPager.setPageTransformer(FadePageTransformer()) //removes view pager animation
+        //viewPager.setPageTransformer(FadePageTransformer()) //removes view pager animation
+        //viewPager.offscreenPageLimit = 4
         this.viewPager = viewPager
     }
 
