@@ -14,23 +14,21 @@ import com.example.roloandroid.data.User
 import com.example.roloandroid.databinding.CellLayoutBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-
 @ExperimentalCoroutinesApi
 class ContactsListAdapter(
     private val navInterface : NavigationInterface,
     private val starInverterInterface: StarInverterInterface
 ) : ListAdapter<User, ContactsCellViewHolder>(object : DiffUtil.ItemCallback<User>(){
+
     override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
         return (oldItem == newItem)
-        //return false
     }
 
     override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
-        //return false
         return (
-                oldItem.uid == newItem.uid &&
-                oldItem.isFavorite == newItem.isFavorite
-                )
+                return oldItem.uid == newItem.uid
+                //oldItem.isFavorite == newItem.isFavorite
+            )
 
     }
 }) {
@@ -49,43 +47,14 @@ class ContactsListAdapter(
         )
     }
 
+    override fun submitList(list: List<User>?) {
+        super.submitList(list)
+    }
+
     override fun onBindViewHolder(holder: ContactsCellViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 }
 
 
-@ExperimentalCoroutinesApi
-class ContactsCellViewHolder(
-    private val vdb : ViewDataBinding,
-    private val navInterface : NavigationInterface,
-    private val starInverterInterface: StarInverterInterface
-) : RecyclerView.ViewHolder(vdb.root) {
-    fun bind(user : User) {
-        user.apply {
-            (vdb as? CellLayoutBinding)?.let {bind ->
-                bind.barLayout.setOnClickListener {
-                    val bundle = bundleOf(ContactsDetailFragment.UID_KEY to user.uid)
-                    navInterface.navigate(bundle)
-                }
-                val starIV = bind.star
-                starIV.setOnClickListener {
-
-                    if (starIV.getTag(R.string.iv_tag) as Boolean) {
-                        println("WTF")
-                        starIV.setTag(R.string.iv_tag, false)
-                        starIV.setBackgroundResource(R.drawable.ic_gray_circle)
-                    } else {
-                        println("WTFB")
-                        starIV.setTag(R.string.iv_tag, true)
-                        starIV.setBackgroundResource(R.drawable.ic_orange_circle)
-                    }
-                    starInverterInterface.invertStarStatus(user.uid-1) //uid starts at 1 but index starts at 0,
-                }
-                bind.user = user
-                bind.executePendingBindings()
-            }
-        }
-    }
-}
 

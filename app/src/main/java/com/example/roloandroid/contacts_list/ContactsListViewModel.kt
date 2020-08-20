@@ -10,6 +10,8 @@ import com.example.roloandroid.use_case.InvertStarStatusUseCase
 import com.example.roloandroid.use_case.LoadUserDataUseCase
 import com.example.roloandroid.use_case.ObserveRemoteDataUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
@@ -38,6 +40,11 @@ class ContactsListViewModel @ViewModelInject constructor(
             invertStarStatusUseCase(uid)
         }
     }
+
+    fun getUserCache() : Flow<Result<List<User>>> {
+        return loadUserDataUseCase(Unit)
+    }
+
 
 
     fun executeRemoteDataRequest() {
