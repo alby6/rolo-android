@@ -28,7 +28,7 @@ class UserRepository @Inject constructor(
     val dataLastUpdatedObservable : Flow<Long> = dataLastUpdatedChannel.asFlow()
 
 
-    fun executeRemoteDataRequest() {
+    suspend fun executeRemoteDataRequest() {
         val remoteData = remoteDataSource.executeRequest()
         remoteData?.let {
             //save to cache

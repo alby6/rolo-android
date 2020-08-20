@@ -9,7 +9,7 @@ import com.example.roloandroid.util.Util
 
 
 @BindingAdapter("decodeBindBmp")
-fun decodeBindBmp(iv : ImageView, base64BitmapStr : String) {
+fun decodeBindBmp(iv : ImageView, bmp : Bitmap?) {
     /*
     base64BitmapStr?.let {bmp ->
         iv.setImageBitmap(Util.decode64Bmp(bmp))

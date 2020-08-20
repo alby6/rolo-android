@@ -12,14 +12,14 @@ class RemoteDataDownloader @Inject constructor(
 ) {
 
     companion object  {
-        const val URL = "https://51ab3c19-6483-4cd8-81d2-ece629815aa2.mock.pstmn.io/users"
+        const val BASE_URL = "https://51ab3c19-6483-4cd8-81d2-ece629815aa2.mock.pstmn.io/users"
     }
 
-    fun executeRequest() : Response {
+    fun executeRequest(url : String) : Response {
         //blocking call
         val request = Request
             .Builder()
-            .url(URL)
+            .url(url)
             .build()
         return  okHttpClient.newCall(request).execute()
     }

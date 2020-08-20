@@ -59,6 +59,7 @@ class ContactsListAllFragment : Fragment() {
         viewModel.wtf.observe(viewLifecycleOwner, Observer {
             it.data?.forEach {
                 println(it)
+                println(it.profilePicture)
             }
         })
         viewModel.executeRemoteDataRequest()
