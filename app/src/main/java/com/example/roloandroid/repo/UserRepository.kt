@@ -11,6 +11,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flow
+import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -69,7 +70,8 @@ class UserRepository @Inject constructor(
             if (cached == null) {
                 emit(Result.Loading)
                 emit(
-                    Result.Success(appDatabase.userDao().getAll())
+                    Result.Success(mutableListOf<User>())
+                    //Result.Success(appDatabase.userDao().getAll())
                 )
             } else {
                 cached?.let {

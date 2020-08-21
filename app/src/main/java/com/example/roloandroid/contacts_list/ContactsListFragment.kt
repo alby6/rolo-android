@@ -82,7 +82,9 @@ class ContactsListFragment : Fragment(), NavigationInterface {
                 adapterMutex.withLock {
                     viewStarredContactsOnly = false
                     viewModel.getUserCache().collect {result ->
-                        adapter.submitList(result.data!!)
+                        result.data?.let {data ->
+                            adapter.submitList(data)
+                        }
                     }
                 }
             }
@@ -93,9 +95,9 @@ class ContactsListFragment : Fragment(), NavigationInterface {
                 adapterMutex.withLock {
                     viewStarredContactsOnly = true
                     viewModel.getUserCache().collect {result ->
-                        adapter.submitList(
-                            filterByFavorites(result.data!!)
-                        )
+                        result.data?.let {data ->
+                            adapter.submitList(filterByFavorites(data))
+                        }
                     }
                 }
             }
