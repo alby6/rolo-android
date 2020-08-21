@@ -29,6 +29,9 @@ class ContactsCellViewHolder(
                 val miniStarIV = bind.miniStar
 
                 starIV.setOnClickListener {
+                    /*
+                        this simply changes the icon for the button when clicked
+                     */
                     if (starIV.getTag(R.string.iv_tag) as Boolean) {
                         starIV.setTag(R.string.iv_tag, false)
                         starIV.setBackgroundResource(R.drawable.ic_orange_circle)
@@ -38,7 +41,11 @@ class ContactsCellViewHolder(
                         starIV.setBackgroundResource(R.drawable.ic_gray_circle)
                         miniStarIV.visibility = VISIBLE
                     }
-                    starInverterInterface.invertFavoriteStatus(user.uid-1) //uid starts at 1 but index starts at 0,
+                    /*
+                        This changes the status of the database/cache and requests an UI update for the recycler view.
+                        uid starts at 1 but index starts at 0, so a -1 is required to balance it.
+                     */
+                    starInverterInterface.invertFavoriteStatus(user.uid-1)
                 }
                 bind.user = user
                 bind.executePendingBindings()

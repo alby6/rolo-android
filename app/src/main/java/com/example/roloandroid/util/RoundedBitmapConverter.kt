@@ -8,6 +8,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 
 class RoundedBitmapConverter {
 
+    //rounds bitmap
     companion object {
         fun roundBmp(bmp : Bitmap, ctx : Context) : RoundedBitmapDrawable {
             val dr = RoundedBitmapDrawableFactory.create(ctx.resources, bmp)

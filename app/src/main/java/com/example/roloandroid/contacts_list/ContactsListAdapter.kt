@@ -27,7 +27,6 @@ class ContactsListAdapter(
     override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
         return (
                 return oldItem.uid == newItem.uid
-                //oldItem.isFavorite == newItem.isFavorite
             )
 
     }

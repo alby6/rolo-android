@@ -60,7 +60,7 @@ class UserRepository @Inject constructor(
 
     fun saveToDisk(users : List<User>?) {
         users?.let {
-            //appDatabase.userDao().insertAll(users.toTypedArray())
+            //appDatabase.userDao().insertAll()
         }
     }
 

@@ -1,13 +1,9 @@
-package com.example.roloandroid
+package com.example.roloandroid.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.roloandroid.data.AppDatabase
-import com.example.roloandroid.data.User
+import com.example.roloandroid.R
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
 @AndroidEntryPoint

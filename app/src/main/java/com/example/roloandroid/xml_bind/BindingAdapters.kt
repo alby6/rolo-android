@@ -48,6 +48,7 @@ fun evaluateMiniStar(iv : AppCompatImageView, isStarred : Boolean) {
 
 @BindingAdapter("invertButtonColor")
 fun invertButtonColor(btn : Button, boolean : Boolean) {
+    //boolean is not used; BindingAdapter requires a non-null second parameter
     if (btn.tag == "blue_background") {
         btn.setBackgroundResource(R.drawable.ic_white_button_background)
         btn.tag = "white_background"

@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.collect
 class ContactsDetailViewModel @ViewModelInject constructor(
     private val loadUserDataUseCase: LoadUserDataUseCase
 ): ViewModel() {
-    // TODO: Implement the ViewModel
 
     private val loadUserDataLiveData = loadUserDataUseCase(Unit).asLiveData()
     val loadUserDataObservable : LiveData<Result<List<User>>> = loadUserDataLiveData

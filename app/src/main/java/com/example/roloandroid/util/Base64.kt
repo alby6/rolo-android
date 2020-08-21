@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream
 
 class Util {
 
+    //convert bmp to base64 to save in room
     companion object {
 
         fun encode64Bmp(bmp : Bitmap) : String {

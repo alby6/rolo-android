@@ -16,20 +16,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
         <androidx.constraintlayout.widget.ConstraintLayout
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="10000dp"
             android:background="@drawable/rounded_top_corners_shape"
             >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintWidth_percent="0.15"
+                android:id="@+id/horizontalBar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_horizontal_bar"
+
+                />
             <ImageView
                 android:id="@+id/profilePicture"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="28dp"
                 app:bindRoundBmp="@{user.profilePicture}"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/horizontalBar"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 />
@@ -37,10 +52,11 @@
                 android:id="@+id/personName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
+                android:textSize="18sp"
                 android:gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="23dp"
                 android:text="@{user.name}"
+                android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/profilePicture"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -49,9 +65,9 @@
                 android:id="@+id/companyName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:gravity="center_horizontal"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="@{user.company.companyName}"
                 app:layout_constraintTop_toBottomOf="@+id/personName"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -61,7 +77,7 @@
                 android:id="@+id/companyLogo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:text="@{user.company.catchPhrase}"
@@ -69,6 +85,45 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 />
+
+            <LinearLayout
+                android:id="@+id/iconLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toBottomOf="@id/companyLogo"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                >
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/chatButton"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginEnd="30dp"
+                    app:srcCompat="@drawable/ic_light_gray_circle"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/callButton"
+                    app:srcCompat="@drawable/ic_light_gray_circle"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{user.email}"
+                android:textSize="14sp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                app:layout_constraintTop_toBottomOf="@id/iconLayout"
+                />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>

@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.example.roloandroid.FadePageTransformer
 import com.example.roloandroid.R
 import com.example.roloandroid.data.User
 import com.example.roloandroid.databinding.ContactsListFragmentBinding
@@ -58,8 +57,8 @@ class ContactsListFragment : Fragment(), NavigationInterface {
         setAdapter(bind)
         setClickObservables()
         setAdapterObservable()
-
         viewModel.executeRemoteDataRequest()
+
         return bind.root
     }
 
@@ -77,6 +76,7 @@ class ContactsListFragment : Fragment(), NavigationInterface {
 
     private fun setClickObservables() {
 
+        //when all-contacts button is clicked, this will repopulate the recycler view
         viewModel.allClickObservable.observe(viewLifecycleOwner, EventObserver {
             lifecycleScope.launch {
                 adapterMutex.withLock {
@@ -90,6 +90,7 @@ class ContactsListFragment : Fragment(), NavigationInterface {
             }
         })
 
+        //when favorite-contacts button is clicked, this will repopulate the recycler view
         viewModel.starredClickObservable.observe(viewLifecycleOwner, EventObserver {
             lifecycleScope.launch {
                 adapterMutex.withLock {
@@ -104,10 +105,9 @@ class ContactsListFragment : Fragment(), NavigationInterface {
         })
     }
 
+    //when network request is finished, this observable will be notified and the observer will activate
     private fun setAdapterObservable() {
         viewModel.contactsListRefreshRequiredObservable.observe(viewLifecycleOwner, Observer { result ->
-            println("I am called")
-            // adapter.submitList(result.data!!)
             lifecycleScope.launch {
                 adapterMutex.withLock {
                     var list = result.data!!
@@ -126,7 +126,6 @@ class ContactsListFragment : Fragment(), NavigationInterface {
             it.isFavorite
         }
     }
-
 
 
     override fun navigate(bundle: Bundle) {
