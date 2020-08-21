@@ -1,5 +1,7 @@
 package com.example.roloandroid.contacts_list
 
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.core.os.bundleOf
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
@@ -22,14 +24,19 @@ class ContactsCellViewHolder(
                     val bundle = bundleOf(ContactsDetailFragment.UID_KEY to user.uid)
                     navInterface.navigate(bundle)
                 }
+
                 val starIV = bind.star
+                val miniStarIV = bind.miniStar
+
                 starIV.setOnClickListener {
                     if (starIV.getTag(R.string.iv_tag) as Boolean) {
                         starIV.setTag(R.string.iv_tag, false)
-                        starIV.setBackgroundResource(R.drawable.ic_gray_circle)
+                        starIV.setBackgroundResource(R.drawable.ic_orange_circle)
+                        miniStarIV.visibility = GONE
                     } else {
                         starIV.setTag(R.string.iv_tag, true)
-                        starIV.setBackgroundResource(R.drawable.ic_orange_circle)
+                        starIV.setBackgroundResource(R.drawable.ic_gray_circle)
+                        miniStarIV.visibility = VISIBLE
                     }
                     starInverterInterface.invertStarStatus(user.uid-1) //uid starts at 1 but index starts at 0,
                 }
@@ -38,4 +45,5 @@ class ContactsCellViewHolder(
             }
         }
     }
+
 }
