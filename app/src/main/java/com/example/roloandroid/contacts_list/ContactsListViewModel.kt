@@ -34,6 +34,9 @@ class ContactsListViewModel @ViewModelInject constructor(
         loadUserDataUseCase(Unit).asLiveData()
     }
 
+    private var currentButton = ButtonType.ALL
+
+    //notifies buttons that they must invert color
     val invertButtonColorLiveData : MutableLiveData<Boolean> = MediatorLiveData<Boolean>().apply {
         addSource(allClickLiveData) {
             postValue(true)
@@ -43,7 +46,8 @@ class ContactsListViewModel @ViewModelInject constructor(
         }
     }
 
-    override fun invertStarStatus(uid : Int) {
+    //changes favorite status
+    override fun invertFavoriteStatus(uid : Int) {
         viewModelScope.launch {
             invertStarStatusUseCase(uid)
         }
@@ -53,20 +57,30 @@ class ContactsListViewModel @ViewModelInject constructor(
         return loadUserDataUseCase(Unit)
     }
 
-
-
+    //gets user data from server
     fun executeRemoteDataRequest() {
         viewModelScope.launch {
             executeRemoteDataRequestUseCase(Unit)
         }
     }
+
+    //when you only want to see favorite contacts
     fun starredClick() {
+        if (currentButton == ButtonType.STAR) return
         starredClickLiveData.value = Event(Unit)
+        currentButton = ButtonType.STAR
     }
 
+    //when you only want to see all contacts
     fun allClick() {
+        if (currentButton == ButtonType.ALL) return
         allClickLiveData.value = Event(Unit)
+        currentButton = ButtonType.ALL
     }
 
 
+}
+
+enum class ButtonType {
+    STAR, ALL
 }

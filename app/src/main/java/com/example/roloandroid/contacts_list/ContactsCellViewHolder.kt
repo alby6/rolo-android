@@ -38,7 +38,7 @@ class ContactsCellViewHolder(
                         starIV.setBackgroundResource(R.drawable.ic_gray_circle)
                         miniStarIV.visibility = VISIBLE
                     }
-                    starInverterInterface.invertStarStatus(user.uid-1) //uid starts at 1 but index starts at 0,
+                    starInverterInterface.invertFavoriteStatus(user.uid-1) //uid starts at 1 but index starts at 0,
                 }
                 bind.user = user
                 bind.executePendingBindings()
