@@ -11,7 +11,6 @@ import com.example.roloandroid.use_case.LoadUserDataUseCase
 import com.example.roloandroid.use_case.ObserveRemoteDataUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
@@ -24,15 +23,24 @@ class ContactsListViewModel @ViewModelInject constructor(
 
 ): ViewModel(), StarInverterInterface {
 
-    private val starredClick : MutableLiveData<Event<Unit>> = MutableLiveData()
-    val starredClickObservable : LiveData<Event<Unit>> = starredClick
+    private val starredClickLiveData : MutableLiveData<Event<Unit>> = MutableLiveData()
+    val starredClickObservable : LiveData<Event<Unit>> = starredClickLiveData
 
-    private val allClick : MutableLiveData<Event<Unit>> = MutableLiveData()
-    val allClickObservable : LiveData<Event<Unit>> = allClick
+    private val allClickLiveData : MutableLiveData<Event<Unit>> = MutableLiveData()
+    val allClickObservable : LiveData<Event<Unit>> = allClickLiveData
 
     private val dataUpdatedLiveData = observeRemoteDataUseCase(Unit).asLiveData()
     val contactsListRefreshRequiredObservable : LiveData<Result<List<User>>> = dataUpdatedLiveData.switchMap {
         loadUserDataUseCase(Unit).asLiveData()
+    }
+
+    val invertButtonColorLiveData : MutableLiveData<Boolean> = MediatorLiveData<Boolean>().apply {
+        addSource(allClickLiveData) {
+            postValue(true)
+        }
+        addSource(starredClickLiveData) {
+            postValue(true)
+        }
     }
 
     override fun invertStarStatus(uid : Int) {
@@ -53,11 +61,11 @@ class ContactsListViewModel @ViewModelInject constructor(
         }
     }
     fun starredClick() {
-        starredClick.value = Event(Unit)
+        starredClickLiveData.value = Event(Unit)
     }
 
     fun allClick() {
-        allClick.value = Event(Unit)
+        allClickLiveData.value = Event(Unit)
     }
 
 

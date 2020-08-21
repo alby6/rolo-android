@@ -7,6 +7,7 @@ import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.example.roloandroid.R
 import com.example.roloandroid.util.RoundedBitmapConverter
@@ -41,5 +42,17 @@ fun evaluateMiniStar(iv : AppCompatImageView, isStarred : Boolean) {
         iv.visibility = VISIBLE
     } else {
         iv.visibility = GONE
+    }
+}
+
+
+@BindingAdapter("invertButtonColor")
+fun invertButtonColor(btn : Button, boolean : Boolean) {
+    if (btn.tag == "blue_background") {
+        btn.setBackgroundResource(R.drawable.ic_white_button_background)
+        btn.tag = "white_background"
+    } else {
+        btn.setBackgroundResource(R.drawable.ic_blue_button_background)
+        btn.tag = "blue_background"
     }
 }

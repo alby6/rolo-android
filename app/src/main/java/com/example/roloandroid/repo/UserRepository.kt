@@ -68,7 +68,7 @@ class UserRepository @Inject constructor(
     fun getUserCache() : Flow<Result<List<User>>> {
         return flow {
             if (cached == null) {
-                emit(Result.Loading)
+                emit(Result.Loading) //this can be used to add UI update to express to user that data is loading
                 emit(
                     Result.Success(mutableListOf<User>())
                     //Result.Success(appDatabase.userDao().getAll())

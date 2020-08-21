@@ -38,9 +38,9 @@ class ContactsListFragment : Fragment(), NavigationInterface {
     }
 
     val viewModel: ContactsListViewModel by viewModels()
-    lateinit var adapter : ContactsListAdapter
-    var adapterMutex = Mutex()
-    var viewStarredContactsOnly = false
+    private lateinit var adapter : ContactsListAdapter
+    private var adapterMutex = Mutex()
+    private var viewStarredContactsOnly = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
