@@ -2,4 +2,6 @@
     <string name="app_name">RoloAndroid</string>
     <string name="contacts">Contacts</string>
     <string name="iv_tag">iv_tag</string>
+    <string name="starred">Starred</string>
+    <string name="all">All</string>
 </resources>

@@ -47,6 +47,7 @@ class UserRepository @Inject constructor(
         cached?.let {users ->
             if (uid < users.size) {
                 users[uid].isFavorite = !users[uid].isFavorite
+                notifyUpdatedChannel() //this will remove the user from the favorites list if un-favorited
             }
         }
 
