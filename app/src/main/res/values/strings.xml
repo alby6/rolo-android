@@ -4,4 +4,5 @@
     <string name="iv_tag">iv_tag</string>
     <string name="starred">Starred</string>
     <string name="all">All</string>
+    <string name="divider_text">Divider Text</string>
 </resources>
